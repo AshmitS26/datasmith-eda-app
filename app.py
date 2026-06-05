@@ -158,6 +158,7 @@ st.divider()
 # ── UPLOAD ──
 st.subheader("📂 Upload Your Dataset")
 st.markdown("Supported formats: **CSV** and **Excel (.xlsx)**")
+st.info("👈 Use the sidebar for Quick Navigation and tools")
 
 uploaded_file = st.file_uploader(
     label="Drag and drop or click to browse",
