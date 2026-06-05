@@ -18,26 +18,16 @@ st.set_page_config(
     layout="wide"
 )
 
-# ── THEME TOGGLE ──
-if 'theme' not in st.session_state:
-    st.session_state['theme'] = 'dark'
 
-if st.session_state['theme'] == 'dark':
-    st.markdown("""
-        <style>
-            .stApp { background-color: #0e1117; color: #fafafa; }
-            .metric-card { background-color: #1e2130; border-radius: 10px; padding: 15px; }
-        </style>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-        <style>
-            .stApp { background-color: #ffffff; color: #000000; }
-            .metric-card { background-color: #f0f2f6; border-radius: 10px; padding: 15px; }
-        </style>
-    """, unsafe_allow_html=True)
 
 # ── SESSION STATE INIT ──
+if 'transformation_log' not in st.session_state:
+    st.session_state['transformation_log'] = []
+if 'file_history' not in st.session_state:
+    st.session_state['file_history'] = []
+# ── SESSION STATE INIT ──
+if 'theme' not in st.session_state:
+    st.session_state['theme'] = 'dark'
 if 'transformation_log' not in st.session_state:
     st.session_state['transformation_log'] = []
 if 'file_history' not in st.session_state:
@@ -52,11 +42,22 @@ with st.sidebar:
     st.title("⚒️ DataSmith")
     st.markdown("---")
 
-    # Theme Toggle
-    theme_label = "☀️ Switch to Light Mode" if st.session_state['theme'] == 'dark' else "🌙 Switch to Dark Mode"
-    if st.button(theme_label, use_container_width=True):
-        st.session_state['theme'] = 'light' if st.session_state['theme'] == 'dark' else 'dark'
-        st.rerun()
+    if st.session_state['theme'] == 'dark':
+        if st.button("☀️ Switch to Light Mode", use_container_width=True):
+            st.session_state['theme'] = 'light'
+            st._config.set_option('theme.base', 'light')
+            st._config.set_option('theme.backgroundColor', '#f5f7fa')
+            st._config.set_option('theme.secondaryBackgroundColor', '#ffffff')
+            st._config.set_option('theme.textColor', '#1a1a2e')
+            st.rerun()
+    else:
+        if st.button("🌙 Switch to Dark Mode", use_container_width=True):
+            st.session_state['theme'] = 'dark'
+            st._config.set_option('theme.base', 'dark')
+            st._config.set_option('theme.backgroundColor', '#0e1117')
+            st._config.set_option('theme.secondaryBackgroundColor', '#1e2130')
+            st._config.set_option('theme.textColor', '#fafafa')
+            st.rerun()
 
     st.markdown("---")
     st.markdown("## 🗂️ Quick Navigation")
