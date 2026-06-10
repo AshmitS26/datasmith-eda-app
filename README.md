@@ -7,7 +7,7 @@
 
 **From raw datasets to ML-ready data — clean, transform, visualize, all in one place.**
 
-🔗 **Live App:** https://datasmith-eda-app.streamlit.app
+🔗 **Live App:** https://datasmith-eda-app-ashmit26.streamlit.app/
 
 ---
 
