@@ -1,5 +1,6 @@
 import streamlit as st
 
+from UI.style import inject_css
 from UI.sidebar import init_session_state, sidebar
 from UI.loader import data_upload, data_export
 from UI.cleaner import data_cleaning
@@ -19,6 +20,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+#CSS
+inject_css()
+
 
 # ── SESSION + SIDEBAR ──
 init_session_state()
