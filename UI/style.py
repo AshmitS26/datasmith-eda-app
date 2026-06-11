@@ -59,14 +59,13 @@ def inject_css():
     }
 
     /* ═══════════════════════════════════════════
-       SECTION HEADERS (replaces st.subheader)
+       SECTION HEADERS
     ═══════════════════════════════════════════ */
     h2, h3 {
         font-family: var(--font-heading) !important;
         letter-spacing: -0.3px;
     }
 
-    /* Section anchor header pill */
     .section-header {
         display: flex;
         align-items: center;
@@ -113,7 +112,7 @@ def inject_css():
     }
 
     /* ═══════════════════════════════════════════
-       CARDS (st.container with border)
+       CARDS
     ═══════════════════════════════════════════ */
     [data-testid="stVerticalBlockBorderWrapper"] > div {
         border-radius: var(--radius) !important;
@@ -128,7 +127,6 @@ def inject_css():
     /* ═══════════════════════════════════════════
        BUTTONS
     ═══════════════════════════════════════════ */
-    /* Primary action buttons */
     [data-testid="stDownloadButton"] button,
     .stButton > button[kind="primary"] {
         background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%) !important;
@@ -146,8 +144,6 @@ def inject_css():
         transform: translateY(-1px) !important;
         box-shadow: 0 6px 20px rgba(108,99,255,0.45) !important;
     }
-
-    /* Secondary / default buttons */
     .stButton > button {
         border-radius: var(--radius-sm) !important;
         font-weight: 500 !important;
@@ -175,8 +171,6 @@ def inject_css():
         border-color: var(--primary) !important;
         box-shadow: 0 0 0 2px rgba(108,99,255,0.2) !important;
     }
-
-    /* Multiselect tag pills */
     [data-testid="stMultiSelect"] span[data-baseweb="tag"] {
         background: rgba(108,99,255,0.2) !important;
         border-radius: 6px !important;
@@ -240,7 +234,7 @@ def inject_css():
     }
 
     /* ═══════════════════════════════════════════
-       ALERTS / INFO / SUCCESS / WARNING
+       ALERTS
     ═══════════════════════════════════════════ */
     [data-testid="stAlert"] {
         border-radius: var(--radius-sm) !important;
@@ -248,36 +242,33 @@ def inject_css():
     }
 
     /* ═══════════════════════════════════════════
-       SIDEBAR
+       SIDEBAR — follows Streamlit theme automatically
     ═══════════════════════════════════════════ */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f0e1a 0%, #131228 50%, #0e1117 100%) !important;
-        border-right: 1px solid rgba(108,99,255,0.2) !important;
-    }
-    [data-testid="stSidebar"] .stTitle,
-    [data-testid="stSidebar"] h1 {
+
+    /* Title gradient — same in both modes */
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] .stTitle {
         font-family: var(--font-heading) !important;
-        background: linear-gradient(135deg, var(--primary-light), var(--accent));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        background: linear-gradient(135deg, var(--primary-light), var(--accent)) !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
         font-size: 1.4rem !important;
     }
 
-    /* Sidebar nav links hover glow */
+    /* Nav link hover */
     [data-testid="stSidebar"] a > div {
         transition: background 0.2s, box-shadow 0.2s !important;
     }
     [data-testid="stSidebar"] a > div:hover {
-        background: rgba(108,99,255,0.25) !important;
-        box-shadow: inset 2px 0 0 var(--primary) !important;
+        background: rgba(108,99,255,0.15) !important;
+        box-shadow: inset 3px 0 0 var(--primary) !important;
     }
 
     /* Sidebar buttons */
     [data-testid="stSidebar"] .stButton > button {
         background: rgba(108,99,255,0.12) !important;
         border: 1px solid rgba(108,99,255,0.3) !important;
-        color: #fff !important;
         font-weight: 500 !important;
     }
     [data-testid="stSidebar"] .stButton > button:hover {
@@ -351,10 +342,52 @@ def inject_css():
     }
 
     /* ═══════════════════════════════════════════
-       HIDE STREAMLIT DEFAULT CHROME
+       HIDE STREAMLIT CHROME
+       CRITICAL: header must NOT be hidden — it holds
+       the sidebar >>> toggle button on all devices
     ═══════════════════════════════════════════ */
     #MainMenu { visibility: hidden; }
-    footer { visibility: hidden; }
-    header { visibility: hidden; }
+    footer    { visibility: hidden; }
+
+    /* Make header invisible visually but keep it in DOM */
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* ═══════════════════════════════════════════
+       SIDEBAR TOGGLE — always visible
+       Works on desktop and mobile, light and dark
+    ═══════════════════════════════════════════ */
+    [data-testid="stSidebarCollapsedControl"],
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="collapsedControl"] {
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: flex !important;
+        background: rgba(108,99,255,0.18) !important;
+        border: 1px solid rgba(108,99,255,0.45) !important;
+        border-radius: 8px !important;
+        z-index: 9999 !important;
+        transition: all 0.2s ease !important;
+    }
+    [data-testid="stSidebarCollapsedControl"]:hover,
+    [data-testid="stSidebarCollapseButton"]:hover,
+    [data-testid="collapsedControl"]:hover {
+        background: rgba(108,99,255,0.35) !important;
+        box-shadow: 0 0 14px rgba(108,99,255,0.4) !important;
+    }
+    /* Arrow icon inside the button */
+    [data-testid="stSidebarCollapsedControl"] svg,
+    [data-testid="stSidebarCollapseButton"] svg,
+    [data-testid="collapsedControl"] svg,
+    [data-testid="stSidebarCollapsedControl"] button svg,
+    [data-testid="stSidebarCollapseButton"] button svg {
+        fill: var(--primary) !important;
+        color: var(--primary) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
     </style>
     """, unsafe_allow_html=True)
